@@ -1,0 +1,22 @@
+.not-found-cont {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'roboto';
+}
+
+.nf-button {
+  background-color: #f7931e;
+  color: #ffffff;
+  height: 48px;
+  width: 123px;
+  border-radius: 12px;
+  border-style: none;
+  padding: 10px;
+}
+
+.nf-link {
+  text-decoration: none;
+}
