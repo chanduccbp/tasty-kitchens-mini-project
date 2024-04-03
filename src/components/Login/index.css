@@ -1,0 +1,85 @@
+.login-cont {
+  height: 100vh;
+}
+
+@media screen and (min-width: 768px) {
+  .login-cont {
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
+.form-cont {
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+  .form-cont {
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+.form {
+  width: 60%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: grey;
+}
+
+@media screen and (max-width: 767px) {
+  .form {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .web-login-mob {
+    align-self: flex-end;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .web-login-mob {
+    display: none;
+  }
+}
+
+.web-login-desk {
+  height: 100vh;
+  width: 50%;
+}
+
+@media screen and (max-width: 767px) {
+  .web-login-desk {
+    display: none;
+  }
+}
+
+.app-name-desk {
+  color: #f7931e;
+  font-family: 'DM Sans';
+  font-weight: 700;
+  font-style: italic;
+  font-size: 24px;
+}
+
+@media screen and (max-width: 767px) {
+  .web-logo-login-desk {
+    display: none;
+  }
+
+  .app-name-desk {
+    display: none;
+  }
+}

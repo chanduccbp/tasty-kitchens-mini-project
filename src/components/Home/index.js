@@ -1,6 +1,17 @@
 import {Component} from 'react'
 import './index.css'
 
-class Home extends Component {}
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  inProgress: 'IN_PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+
+class Home extends Component {
+  state = {apiStatus: apiStatusConstants.initial}
+
+  render() {}
+}
 
 export default Home
