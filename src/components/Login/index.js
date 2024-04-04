@@ -73,7 +73,7 @@ class Login extends Component {
               className="web-logo-login-desk"
             />
             <p className="app-name-desk">Tasty Kitchens</p>
-            <h1>Login</h1>
+            <h1 className="login-title">Login</h1>
             <label htmlFor="username" className="label">
               USERNAME
             </label>

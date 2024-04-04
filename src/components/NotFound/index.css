@@ -4,7 +4,30 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'roboto';
+  font-family: 'DM Sans';
+}
+
+.nf-head {
+  font-weight: 700;
+  size: 32px;
+  color: #1e293b;
+}
+
+@media screen and (max-width: 767px) {
+  .nf-head {
+    font-size: 20px;
+  }
+}
+
+.nf-para {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .nf-para {
+    font-size: 16px;
+  }
 }
 
 .nf-button {
@@ -15,6 +38,8 @@
   border-radius: 12px;
   border-style: none;
   padding: 10px;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .nf-link {

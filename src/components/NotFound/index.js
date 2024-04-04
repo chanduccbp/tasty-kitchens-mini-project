@@ -7,8 +7,8 @@ const NotFound = () => (
       src="https://res.cloudinary.com/dgil22y25/image/upload/v1712057868/wapwjrva0ji5k9j15n9s.png"
       alt="not found"
     />
-    <h1>Page Not Found</h1>
-    <p>
+    <h1 className="nf-head">Page Not Found</h1>
+    <p className="nf-para">
       We are sorry, the page you requested could not be found.Please go back to
       the homepage
     </p>
