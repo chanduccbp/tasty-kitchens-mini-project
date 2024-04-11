@@ -35,6 +35,7 @@ class Home extends Component {
     restaurantsList: [],
     sortBy: sortByOptions[1].value,
     activePage: 1,
+    totalPages: '',
   }
 
   componentDidMount() {
@@ -83,9 +84,12 @@ class Home extends Component {
       totalRatings: eachObj.user_rating.total_reviews,
     }))
 
+    const totalRestaurantPages = Math.ceil(restaurantsData.total / 9)
+
     this.setState({
       offersList: updatedOffersData,
       restaurantsList: updatedRestaurantsData,
+      totalPages: totalRestaurantPages,
       apiStatus: apiStatusConstants.success,
     })
   }
@@ -95,21 +99,29 @@ class Home extends Component {
   }
 
   decrementActivePage = () => {
-    this.setState(
-      prevState => ({
-        activePage: prevState.activePage - 1,
-      }),
-      this.getOffersAndRestaurants,
-    )
+    const {activePage} = this.state
+
+    if (activePage > 1) {
+      this.setState(
+        prevState => ({
+          activePage: prevState.activePage - 1,
+        }),
+        this.getOffersAndRestaurants,
+      )
+    }
   }
 
   incrementActivePage = () => {
-    this.setState(
-      prevState => ({
-        activePage: prevState.activePage + 1,
-      }),
-      this.getOffersAndRestaurants,
-    )
+    const {activePage, totalPages} = this.state
+
+    if (activePage < totalPages) {
+      this.setState(
+        prevState => ({
+          activePage: prevState.activePage + 1,
+        }),
+        this.getOffersAndRestaurants,
+      )
+    }
   }
 
   renderCarousalLoadingView = () => (
@@ -156,7 +168,7 @@ class Home extends Component {
   }
 
   getRestaurantsView = () => {
-    const {restaurantsList, activePage} = this.state
+    const {restaurantsList, activePage, totalPages} = this.state
 
     return (
       <div className="restaurants-list-cont">
@@ -167,7 +179,7 @@ class Home extends Component {
                 <img
                   src={eachObj.imageUrl}
                   alt="restaurant"
-                  testid="restaurant-item"
+                  //   testid="restaurant-item"
                   className="rest-item-img"
                 />
                 <div className="rest-details">
@@ -188,7 +200,9 @@ class Home extends Component {
             onClick={this.decrementActivePage}
             testid="pagination-left-button"
           />
-          <span testid="active-page-number">{activePage}</span>
+          <span>
+            {activePage} of {totalPages}
+          </span>
           <MdKeyboardArrowRight
             onClick={this.incrementActivePage}
             testid="pagination-right-button"

@@ -12,7 +12,7 @@ const Footer = () => (
       <img
         src="https://res.cloudinary.com/dgil22y25/image/upload/v1712313837/Frame_275_phtzrz.png"
         alt="website-footer-logo"
-        className='web-footer-logo'
+        className="web-footer-logo"
       />
       <h1>Tasty Kitchens</h1>
     </div>

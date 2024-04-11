@@ -1,7 +1,6 @@
 import {Link, withRouter} from 'react-router-dom'
 import Cookies from 'js-cookie'
-import {RxHamburgerMenu} from 'react-icons/rx'
-import {IoIosCloseCircle} from 'react-icons/io'
+import {IoIosCloseCircle, IoIosMenu} from 'react-icons/io'
 import TabContext from '../../context/TabContext'
 import './index.css'
 
@@ -33,9 +32,9 @@ const Header = props => {
         }
 
         const homeTabClass =
-          activeNavTab === 'HOME' ? 'active-nav-button' : 'nav-button'
+          activeNavTab === 'HOME' ? 'active-nav-tab' : 'nav-tab'
         const cartTabClass =
-          activeNavTab === 'CART' ? 'active-nav-button' : 'nav-button'
+          activeNavTab === 'CART' ? 'active-nav-tab' : 'nav-tab'
 
         const showMobileMenu = () => {
           onClickHamIcon()
@@ -56,31 +55,46 @@ const Header = props => {
               <p className="app-name-nav">Tasty Kitchens</p>
             </Link>
             <div className="nav-buttons-desk">
-              <Link to="/" onClick={onClickHomeTab}>
+              <Link to="/" onClick={onClickHomeTab} className="nav-link">
                 <span className={homeTabClass}>Home</span>
               </Link>
-              <Link to="/cart" onClick={onClickCartTab}>
+              <Link to="/cart" onClick={onClickCartTab} className="nav-link">
                 <span className={cartTabClass}>Cart</span>
               </Link>
-              <button type="button" onClick={onClickLogout}>
+              <button
+                type="button"
+                onClick={onClickLogout}
+                className="nav-button"
+              >
                 Logout
               </button>
             </div>
-            <RxHamburgerMenu onClick={onClickHamIcon} className="ham-icon" />
+            <IoIosMenu onClick={showMobileMenu} className="ham-icon" />
             {showMenu && (
               <div className="nav-buttons-mob">
                 <div className="nav-buttons">
-                  <Link to="/" onClick={onClickHomeTab}>
+                  <Link to="/" onClick={onClickHomeTab} className="nav-link">
                     <span className={homeTabClass}>Home</span>
                   </Link>
-                  <Link to="/cart" onClick={onClickCartTab}>
+                  <Link
+                    to="/cart"
+                    onClick={onClickCartTab}
+                    className="nav-link"
+                  >
                     <span className={cartTabClass}>Cart</span>
                   </Link>
-                  <button type="button" onClick={onClickLogout}>
+                  <button
+                    type="button"
+                    onClick={onClickLogout}
+                    className="nav-button"
+                  >
                     Logout
                   </button>
                 </div>
-                <IoIosCloseCircle onClick={onClickClose} />
+                <IoIosCloseCircle
+                  onClick={closeMobileMenu}
+                  className="menu-close"
+                />
               </div>
             )}
           </nav>
