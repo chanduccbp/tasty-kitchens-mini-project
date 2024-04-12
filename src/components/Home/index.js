@@ -125,7 +125,7 @@ class Home extends Component {
   }
 
   renderCarousalLoadingView = () => (
-    <div>
+    <div className="offers-loader">
       <Loader
         type="TailSpin"
         color="#F7931E"
@@ -137,7 +137,7 @@ class Home extends Component {
   )
 
   renderRestaurantsLoadingView = () => (
-    <div>
+    <div className="rest-list-loader">
       <Loader
         type="TailSpin"
         color="#F7931E"
@@ -159,7 +159,7 @@ class Home extends Component {
         <Slider {...settings}>
           {offersList.map(eachObj => (
             <div key={eachObj.id}>
-              <img src={eachObj.imageUrl} alt="offer" />
+              <img src={eachObj.imageUrl} alt="offer" className="offer-image" />
             </div>
           ))}
         </Slider>
@@ -174,7 +174,7 @@ class Home extends Component {
       <div className="restaurants-list-cont">
         <ul className="restaurants-list">
           {restaurantsList.map(eachObj => (
-            <Link to={`/restaurant/${eachObj.id}`}>
+            <Link to={`/restaurant/${eachObj.id}`} className="res-item-link-el">
               <li key={eachObj.id} className="restaurant-item">
                 <img
                   src={eachObj.imageUrl}
@@ -185,7 +185,7 @@ class Home extends Component {
                 <div className="rest-details">
                   <h1 className="rest-name">{eachObj.name}</h1>
                   <p className="cuisine">{eachObj.cuisine}</p>
-                  <FaStar />
+                  <FaStar className="star-icon" />
                   <span className="rating-num">{eachObj.rating}</span>
                   <span className="total-ratings">
                     ({eachObj.totalRatings})
@@ -199,13 +199,15 @@ class Home extends Component {
           <MdKeyboardArrowLeft
             onClick={this.decrementActivePage}
             testid="pagination-left-button"
+            className="arrow-icon"
           />
-          <span>
+          <span className="pages">
             {activePage} of {totalPages}
           </span>
           <MdKeyboardArrowRight
             onClick={this.incrementActivePage}
             testid="pagination-right-button"
+            className="arrow-icon"
           />
         </div>
       </div>
@@ -244,21 +246,21 @@ class Home extends Component {
         <Header />
         {this.renderCarousalView()}
         <div className="title-and-filter-cont">
-          <h1>Popular Restaurants</h1>
+          <h1 className="title">Popular Restaurants</h1>
           <div className="filter-cont">
-            <p>
+            <p className="filter-title">
               Select Your favourite restaurant special dish and make your day
               happy...
             </p>
             <div className="select-el-cont">
-              <MdSort />
+              <MdSort className="sort-icon" />
               <select
                 onChange={this.onChangeFilter}
                 value={sortBy}
                 className="select-el"
               >
                 {sortByOptions.map(eachObj => (
-                  <option key={eachObj.id} value={eachObj.id}>
+                  <option key={eachObj.id} value={eachObj.value}>
                     Sort by {eachObj.displayText}
                   </option>
                 ))}

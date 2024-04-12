@@ -19,6 +19,12 @@
 
 .web-footer-logo {
   margin-right: 10px;
+  height: 39px;
+  width: 49px;
+}
+
+.footer-logo-label {
+  margin: 0px;
 }
 
 .footer-desc {
@@ -33,6 +39,12 @@
   justify-content: space-between;
   align-items: center;
   width: 400px;
+}
+
+.footer-icon {
+  height: 40px;
+  width: 40px;
+  color: #ffffff;
 }
 
 @media screen and (max-width: 767px) {
