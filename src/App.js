@@ -10,10 +10,10 @@ import TabContext from './context/TabContext'
 import './App.css'
 
 const getActiveTab = () => {
-  const activeTab = localStorage.getItem('active_tab')
+  const activeTab = JSON.parse(localStorage.getItem('active_tab'))
   if (activeTab === null) {
-    localStorage.setItem('active_tab', 'HOME')
-    return localStorage.getItem('active_tab')
+    localStorage.setItem('active_tab', JSON.stringify('HOME'))
+    return JSON.parse(localStorage.getItem('active_tab'))
   }
 
   return activeTab
@@ -23,7 +23,7 @@ class App extends Component {
   state = {activeNavTab: getActiveTab(), showMenu: false}
 
   changeTab = tab => {
-    localStorage.setItem('active_tab', tab)
+    localStorage.setItem('active_tab', JSON.stringify(tab))
     this.setState({activeNavTab: tab})
   }
 
