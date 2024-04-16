@@ -2,6 +2,8 @@ import {Component} from 'react'
 import Header from '../Header'
 import Footer from '../Footer'
 import Cookies from 'js-cookie'
+import Loader from 'react-loader-spinner'
+import {FaStar} from 'react-icons/fa'
 import './index.css'
 
 const cartItems = JSON.parse(localStorage.getItem('cart_items'))
@@ -65,6 +67,7 @@ class RestaurantDetails extends Component {
         foodType: eachObj.food_type,
         imageUrl: eachObj.image_url,
         id: eachObj.id,
+        rating: eachObj.rating,
         quantity: 1,
         isAdded: false,
       }),
@@ -76,6 +79,12 @@ class RestaurantDetails extends Component {
       apiStatus: apiStatusConstants.success,
     })
   }
+
+  addItemToCart = id => {}
+
+  increaseItemCount = id => {}
+
+  decreaseItemCount = id => {}
 
   getRestaurantDetailsLoadingView = () => (
     <div className="rest-details-loader">
@@ -89,7 +98,112 @@ class RestaurantDetails extends Component {
     </div>
   )
 
-  getRestaurantDetailsView = () => {}
+  getRestaurantDetailsView = () => {
+    const {restaurantDetails, foodItems} = this.state
+    const {
+      rating,
+      name,
+      costForTwo,
+      cuisine,
+      imageUrl,
+      reviewsCount,
+      opensAt,
+      location,
+      itemsCount,
+    } = restaurantDetails
+
+    return (
+      <div className="rest-details-view-cont">
+        <div className="rest-details-banner">
+          <img src={imageUrl} alt="restaurant" className="rest-banner-image" />
+          <div className="rest-banner-details">
+            <h1 className="banner-rest-name">{name}</h1>
+            <p className="banner-rest-cuisine">{cuisine}</p>
+            <p className="banner-rest-location">{location}</p>
+            <p className="banner-rest-open-time">{opensAt}</p>
+            <p className="banner-rest-total-items">{itemsCount}</p>
+            <div className="banner-rating-cont">
+              <div className="banner-rating-num">
+                <FaStar className="banner-rating-star" />
+                <span className="banner-rest-rating">{rating}</span>
+              </div>
+              <span className="banner-rest-total-ratings">
+                {reviewsCount}+ Ratings
+              </span>
+            </div>
+            <div className="banner-rest-cost-cont">
+              <span className="banner-rest-cost">₹ {costForTwo}</span>
+              <span className="banner-rest-cost-for-two">Cost for two</span>
+            </div>
+          </div>
+        </div>
+        <ul className="food-items-list">
+          {foodItems.map(eachObj => {
+            const onClickAddButton = () => {
+              this.addItemToCart(eachObj.id)
+            }
+
+            const onClickIncrementButton = () => {
+              this.increaseItemCount(eachObj.id)
+            }
+
+            const onClickDecrementButton = () => {
+              this.decreaseItemCount(eachObj.id)
+            }
+
+            return (
+              <li className="food-item" testid="foodItem">
+                <img
+                  src={eachObj.imageUrl}
+                  alt="foodItem"
+                  className="food-item-image"
+                />
+                <div className="food-item-details">
+                  <h1 className="food-item-name">{eachObj.name}</h1>
+                  <p className="food-item-cost">₹ {eachObj.cost}</p>
+                  <div className="food-item-rating-cont">
+                    <FaStar className="food-item-rating-star" />
+                    <span className="food-item-rating">{eachObj.rating}</span>
+                  </div>
+                  {eachObj.isAdded ? (
+                    <div>
+                      <button
+                        type="button"
+                        onClick={onClickDecrementButton}
+                        className="item-quantity-update-button"
+                        testid="decrement-count"
+                      >
+                        -
+                      </button>
+                      <span className="item-quantity" testid="active-count">
+                        {eachObj.quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={onClickIncrementButton}
+                        className="item-quantity-update-button"
+                        testid="increment-count"
+                      >
+                        +
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={onClickAddButton}
+                      className="item-add-button"
+                    >
+                      ADD
+                    </button>
+                  )}
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    )
+  }
 
   renderRestaurantDetailsView = () => {
     const {apiStatus} = this.state
