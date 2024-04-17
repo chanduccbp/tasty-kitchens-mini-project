@@ -80,11 +80,164 @@ class RestaurantDetails extends Component {
     })
   }
 
-  addItemToCart = id => {}
+  addItemToCart = item => {
+    const {foodItems} = this.state
+    const cartItemsList = JSON.parse(localStorage.getItem('cart_items'))
+    const similarItem = cartItemsList.find(eachObj => eachObj.id === item.id)
 
-  increaseItemCount = id => {}
+    if (similarItem === undefined) {
+      const newItem = {
+        id: item.id,
+        name: item.name,
+        cost: item.cost,
+        quantity: item.quantity,
+        imageUrl: item.imageUrl,
+      }
 
-  decreaseItemCount = id => {}
+      const newCartItemsList = cartItemsList.push(newItem)
+      localStorage.setItem('cart_items', JSON.stringify(newCartItemsList))
+
+      const updatedFoodItems = foodItems.map(eachObj => {
+        if (eachObj.id === item.id) {
+          return {
+            name: item.name,
+            cost: item.cost,
+            foodType: item.foodType,
+            imageUrl: item.imageUrl,
+            id: item.id,
+            rating: item.rating,
+            quantity: item.quantity,
+            isAdded: true,
+          }
+        }
+        return eachObj
+      })
+
+      this.setState({foodItems: updatedFoodItems})
+    } else {
+      const updatedFoodItems = foodItems.map(eachObj => {
+        if (eachObj.id === item.id) {
+          return {
+            name: item.name,
+            cost: item.cost,
+            foodType: item.foodType,
+            imageUrl: item.imageUrl,
+            id: item.id,
+            rating: item.rating,
+            quantity: similarItem.quantity,
+            isAdded: true,
+          }
+        }
+        return eachObj
+      })
+
+      this.setState({foodItems: updatedFoodItems})
+    }
+  }
+
+  increaseItemCount = item => {
+    const {foodItems} = this.state
+    const cartItemsList = JSON.parse(localStorage.getItem('cart_items'))
+
+    const updatedCartItemsList = cartItemsList.map(eachObj => {
+      if (eachObj.id === item.id) {
+        return {
+          id: item.id,
+          name: item.name,
+          cost: item.cost,
+          quantity: item.quantity + 1,
+          imageUrl: item.imageUrl,
+        }
+      }
+
+      return eachObj
+    })
+
+    localStorage.setItem('cart_items', JSON.stringify(updatedCartItemsList))
+
+    const updatedFoodItems = foodItems.map(eachObj => {
+      if (eachObj.id === item.id) {
+        return {
+          name: item.name,
+          cost: item.cost,
+          foodType: item.foodType,
+          imageUrl: item.imageUrl,
+          id: item.id,
+          rating: item.rating,
+          quantity: item.quantity + 1,
+          isAdded: true,
+        }
+      }
+      return eachObj
+    })
+
+    this.setState({foodItems: updatedFoodItems})
+  }
+
+  decreaseItemCount = item => {
+    const {foodItems} = this.state
+    const cartItemsList = JSON.parse(localStorage.getItem('cart_items'))
+
+    if (item.quantity > 1) {
+      const updatedCartItemsList = cartItemsList.map(eachObj => {
+        if (eachObj.id === item.id) {
+          return {
+            id: item.id,
+            name: item.name,
+            cost: item.cost,
+            quantity: item.quantity - 1,
+            imageUrl: item.imageUrl,
+          }
+        }
+
+        return eachObj
+      })
+
+      localStorage.setItem('cart_items', JSON.stringify(updatedCartItemsList))
+
+      const updatedFoodItems = foodItems.map(eachObj => {
+        if (eachObj.id === item.id) {
+          return {
+            name: item.name,
+            cost: item.cost,
+            foodType: item.foodType,
+            imageUrl: item.imageUrl,
+            id: item.id,
+            rating: item.rating,
+            quantity: item.quantity - 1,
+            isAdded: true,
+          }
+        }
+        return eachObj
+      })
+
+      this.setState({foodItems: updatedFoodItems})
+    } else {
+      const updatedCartItemsList = cartItemsList.filter(
+        eachObj => eachObj.id !== item.id,
+      )
+
+      localStorage.setItem('cart_items', JSON.stringify(updatedCartItemsList))
+
+      const updatedFoodItems = foodItems.map(eachObj => {
+        if (eachObj.id === item.id) {
+          return {
+            name: item.name,
+            cost: item.cost,
+            foodType: item.foodType,
+            imageUrl: item.imageUrl,
+            id: item.id,
+            rating: item.rating,
+            quantity: item.quantity,
+            isAdded: false,
+          }
+        }
+        return eachObj
+      })
+
+      this.setState({foodItems: updatedFoodItems})
+    }
+  }
 
   getRestaurantDetailsLoadingView = () => (
     <div className="rest-details-loader">
@@ -140,15 +293,15 @@ class RestaurantDetails extends Component {
         <ul className="food-items-list">
           {foodItems.map(eachObj => {
             const onClickAddButton = () => {
-              this.addItemToCart(eachObj.id)
+              this.addItemToCart(eachObj)
             }
 
             const onClickIncrementButton = () => {
-              this.increaseItemCount(eachObj.id)
+              this.increaseItemCount(eachObj)
             }
 
             const onClickDecrementButton = () => {
-              this.decreaseItemCount(eachObj.id)
+              this.decreaseItemCount(eachObj)
             }
 
             return (
