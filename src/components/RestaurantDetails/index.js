@@ -321,21 +321,21 @@ class RestaurantDetails extends Component {
                   {eachObj.isAdded ? (
                     <div>
                       <button
+                        testid="decrement-count"
                         type="button"
                         onClick={onClickDecrementButton}
                         className="item-quantity-update-button"
-                        testid="decrement-count"
                       >
                         -
                       </button>
-                      <span className="item-quantity" testid="active-count">
+                      <span testid="active-count" className="item-quantity">
                         {eachObj.quantity}
                       </span>
                       <button
+                        testid="increment-count"
                         type="button"
                         onClick={onClickIncrementButton}
                         className="item-quantity-update-button"
-                        testid="increment-count"
                       >
                         +
                       </button>

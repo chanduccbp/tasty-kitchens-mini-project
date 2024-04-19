@@ -26,7 +26,68 @@ class Cart extends Component {
 
   getEmptyCartView = () => {}
 
-  getCartView = () => {}
+  getCartView = () => {
+    const {cartList} = this.state
+
+    return (
+      <div className="cart-view-cont">
+        <div className="cart-items-cont">
+          <div className="cart-items-header">
+            <span className="cart-heading">Item</span>
+            <span className="cart-heading">Quantity</span>
+            <span className="cart-heading">Price</span>
+          </div>
+          <ul className="cart-items-list">
+            {cartList.map(eachObj => {
+              const onClickPlus = () => {
+                this.incrementItem(eachObj)
+              }
+
+              const onClickMinus = () => {
+                this.decrementItem(eachObj)
+              }
+
+              return (
+                <li testid="cartItem" className="cart-item" key={eachObj.id}>
+                  <img
+                    src={eachObj.imageUrl}
+                    alt="cart-item-img"
+                    className="cart-item-img"
+                  />
+                  <span>{eachObj.name}</span>
+                  <div className="item-quantity-cont">
+                    <button
+                      testid="decrement-quantity"
+                      type="button"
+                      onClick={onClickMinus}
+                      className="cart-item-quantity-update-button"
+                    >
+                      -
+                    </button>
+                    <span testid="item-quantity" className="cart-item-quantity">
+                      {eachObj.quantity}
+                    </span>
+                    <button
+                      testid="increment-quantity"
+                      type="button"
+                      onClick={onClickPlus}
+                      className="cart-item-quantity-update-button"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <span testid="total-price">
+                    {eachObj.quantity * eachObj.cost}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+        <Footer />
+      </div>
+    )
+  }
 
   getPaymentSuccessView = () => {}
 
