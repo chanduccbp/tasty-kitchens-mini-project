@@ -127,11 +127,11 @@ class Home extends Component {
   renderCarousalLoadingView = () => (
     <div className="offers-loader">
       <Loader
+        testid="restaurants-offers-loader"
         type="TailSpin"
         color="#F7931E"
         height="50"
         width="50"
-        testid="restaurants-offers-loader"
       />
     </div>
   )
@@ -139,11 +139,11 @@ class Home extends Component {
   renderRestaurantsLoadingView = () => (
     <div className="rest-list-loader">
       <Loader
+        testid="restaurants-list-loader"
         type="TailSpin"
         color="#F7931E"
         height="50"
         width="50"
-        testid="restaurants-list-loader"
       />
     </div>
   )
@@ -175,11 +175,14 @@ class Home extends Component {
         <ul className="restaurants-list">
           {restaurantsList.map(eachObj => (
             <Link to={`/restaurant/${eachObj.id}`} className="res-item-link-el">
-              <li key={eachObj.id} className="restaurant-item">
+              <li
+                testid="restaurant-item"
+                key={eachObj.id}
+                className="restaurant-item"
+              >
                 <img
                   src={eachObj.imageUrl}
                   alt="restaurant"
-                  //   testid="restaurant-item"
                   className="rest-item-img"
                 />
                 <div className="rest-details">
@@ -197,16 +200,16 @@ class Home extends Component {
         </ul>
         <div className="page-cont">
           <MdKeyboardArrowLeft
-            onClick={this.decrementActivePage}
             testid="pagination-left-button"
+            onClick={this.decrementActivePage}
             className="arrow-icon"
           />
-          <span className="pages">
+          <span testid="active-page-number" className="pages">
             {activePage} of {totalPages}
           </span>
           <MdKeyboardArrowRight
-            onClick={this.incrementActivePage}
             testid="pagination-right-button"
+            onClick={this.incrementActivePage}
             className="arrow-icon"
           />
         </div>

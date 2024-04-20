@@ -6,9 +6,9 @@ import Loader from 'react-loader-spinner'
 import {FaStar} from 'react-icons/fa'
 import './index.css'
 
-const cartItems = JSON.parse(localStorage.getItem('cart_items'))
+const cartItems = JSON.parse(localStorage.getItem('cartData'))
 if (cartItems === null) {
-  localStorage.setItem('cart_items', JSON.stringify([]))
+  localStorage.setItem('cartData', JSON.stringify([]))
 }
 
 const apiStatusConstants = {
@@ -82,7 +82,7 @@ class RestaurantDetails extends Component {
 
   addItemToCart = item => {
     const {foodItems} = this.state
-    const cartItemsList = JSON.parse(localStorage.getItem('cart_items'))
+    const cartItemsList = JSON.parse(localStorage.getItem('cartData'))
     const similarItem = cartItemsList.find(eachObj => eachObj.id === item.id)
 
     if (similarItem === undefined) {
@@ -95,7 +95,7 @@ class RestaurantDetails extends Component {
       }
 
       const newCartItemsList = cartItemsList.push(newItem)
-      localStorage.setItem('cart_items', JSON.stringify(newCartItemsList))
+      localStorage.setItem('cartData', JSON.stringify(newCartItemsList))
 
       const updatedFoodItems = foodItems.map(eachObj => {
         if (eachObj.id === item.id) {
@@ -137,7 +137,7 @@ class RestaurantDetails extends Component {
 
   increaseItemCount = item => {
     const {foodItems} = this.state
-    const cartItemsList = JSON.parse(localStorage.getItem('cart_items'))
+    const cartItemsList = JSON.parse(localStorage.getItem('cartData'))
 
     const updatedCartItemsList = cartItemsList.map(eachObj => {
       if (eachObj.id === item.id) {
@@ -153,7 +153,7 @@ class RestaurantDetails extends Component {
       return eachObj
     })
 
-    localStorage.setItem('cart_items', JSON.stringify(updatedCartItemsList))
+    localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
 
     const updatedFoodItems = foodItems.map(eachObj => {
       if (eachObj.id === item.id) {
@@ -176,7 +176,7 @@ class RestaurantDetails extends Component {
 
   decreaseItemCount = item => {
     const {foodItems} = this.state
-    const cartItemsList = JSON.parse(localStorage.getItem('cart_items'))
+    const cartItemsList = JSON.parse(localStorage.getItem('cartData'))
 
     if (item.quantity > 1) {
       const updatedCartItemsList = cartItemsList.map(eachObj => {
@@ -193,7 +193,7 @@ class RestaurantDetails extends Component {
         return eachObj
       })
 
-      localStorage.setItem('cart_items', JSON.stringify(updatedCartItemsList))
+      localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
 
       const updatedFoodItems = foodItems.map(eachObj => {
         if (eachObj.id === item.id) {
@@ -217,7 +217,7 @@ class RestaurantDetails extends Component {
         eachObj => eachObj.id !== item.id,
       )
 
-      localStorage.setItem('cart_items', JSON.stringify(updatedCartItemsList))
+      localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
 
       const updatedFoodItems = foodItems.map(eachObj => {
         if (eachObj.id === item.id) {
@@ -242,11 +242,11 @@ class RestaurantDetails extends Component {
   getRestaurantDetailsLoadingView = () => (
     <div className="rest-details-loader">
       <Loader
+        testid="restaurant-details-loader"
         type="TailSpin"
         color="#F7931E"
         height="50"
         width="50"
-        testid="restaurant-details-loader"
       />
     </div>
   )
@@ -305,7 +305,7 @@ class RestaurantDetails extends Component {
             }
 
             return (
-              <li className="food-item" testid="foodItem">
+              <li testid="foodItem" className="food-item">
                 <img
                   src={eachObj.imageUrl}
                   alt="foodItem"
@@ -319,7 +319,7 @@ class RestaurantDetails extends Component {
                     <span className="food-item-rating">{eachObj.rating}</span>
                   </div>
                   {eachObj.isAdded ? (
-                    <div>
+                    <div className="food-item-quantity-cont">
                       <button
                         testid="decrement-count"
                         type="button"
