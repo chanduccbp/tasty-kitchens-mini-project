@@ -1,0 +1,118 @@
+.rest-details-cont {
+  min-height: 100vh;
+}
+
+.rest-details-view-cont {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.rest-details-banner {
+  background-image: url('https://res.cloudinary.com/dgil22y25/image/upload/v1713782128/Frame_279_ucrwh0.png');
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  padding-left: 165px;
+  height: 344px;
+  width: 100%;
+}
+
+.rest-banner-image {
+  width: 445px;
+  height: 280px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.rest-banner-details {
+  height: 445px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: #ffffff;
+}
+
+.banner-rest-name {
+  font-family: 'roboto';
+  font-weight: 500;
+  font-size: 36px;
+}
+
+.banner-rest-info {
+  font-family: 'roboto';
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.banner-rating-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border-right: 1px solid #e2e8f0;
+  color: #ffffff;
+}
+
+.banner-rating-star {
+  height: 12px;
+  width: 12px;
+}
+
+.banner-rest-rating {
+  font-family: 'DM Sans';
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.banner-rest-total-ratings {
+  font-family: 'DM Sans';
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.banner-rest-cost-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+.banner-rest-cost {
+  font-family: 'DM Sans';
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.banner-rest-cost-for-two {
+  font-family: 'DM Sans';
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.food-items-list {
+  padding-left: 0px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-left: 165px;
+  padding-right: 165px;
+  margin-top: 48px;
+}
+
+.food-item {
+  width: 40%;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.food-item-image {
+  height: 150px;
+  width: 255px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+

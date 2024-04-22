@@ -270,11 +270,11 @@ class RestaurantDetails extends Component {
         <div className="rest-details-banner">
           <img src={imageUrl} alt="restaurant" className="rest-banner-image" />
           <div className="rest-banner-details">
-            <h1 className="banner-rest-name">{name}</h1>
-            <p className="banner-rest-cuisine">{cuisine}</p>
-            <p className="banner-rest-location">{location}</p>
-            <p className="banner-rest-open-time">{opensAt}</p>
-            <p className="banner-rest-total-items">{itemsCount}</p>
+            <h1 className="banner-rest-info">{name}</h1>
+            <p className="banner-rest-info">{cuisine}</p>
+            <p className="banner-rest-info">{location}</p>
+            <p className="banner-rest-info">{opensAt}</p>
+            <p className="banner-rest-info">{itemsCount}</p>
             <div className="banner-rating-cont">
               <div className="banner-rating-num">
                 <FaStar className="banner-rating-star" />
