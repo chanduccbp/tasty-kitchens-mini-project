@@ -1,7 +1,9 @@
+/* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Header from '../Header'
 import Footer from '../Footer'
+import TabContext from '../../context/TabContext'
 import './index.css'
 
 const getCartItems = () => {
@@ -17,6 +19,7 @@ class Cart extends Component {
   state = {cartList: getCartItems(), isPaymentDone: false}
 
   onPlacingOrder = () => {
+    localStorage.removeItem('cartData')
     this.setState({isPaymentDone: true})
   }
 
@@ -24,7 +27,11 @@ class Cart extends Component {
     const {cartList} = this.state
     let totalPrice = 0
 
-    cartList.forEach(eachObj => (totalPrice += eachObj.quantity * eachObj.cost))
+    const addPrice = eachObj => {
+      totalPrice += eachObj.quantity * eachObj.cost
+    }
+
+    cartList.forEach(eachObj => addPrice(eachObj))
 
     return totalPrice
   }
@@ -82,22 +89,34 @@ class Cart extends Component {
   }
 
   getEmptyCartView = () => (
-    <div className="empty-cart-view">
-      <img
-        src="https://res.cloudinary.com/dgil22y25/image/upload/v1713602304/Layer_2_orbepx.png"
-        alt="empty cart"
-        className="empty-cart-image"
-      />
-      <h1 className="empty-cart-heading">No Orders Yet!</h1>
-      <p className="empty-cart-description">
-        Your cart is empty. Add something from the menu.
-      </p>
-      <Link to="/" className="cart-link-el">
-        <button type="button" className="empty-cart-button">
-          Order Now
-        </button>
-      </Link>
-    </div>
+    <TabContext.Consumer>
+      {value => {
+        const {changeTab} = value
+
+        const onClickOrderNow = () => {
+          changeTab('HOME')
+        }
+
+        return (
+          <div className="empty-cart-view">
+            <img
+              src="https://res.cloudinary.com/dgil22y25/image/upload/v1713602304/Layer_2_orbepx.png"
+              alt="empty cart"
+              className="empty-cart-image"
+            />
+            <h1 className="empty-cart-heading">No Orders Yet!</h1>
+            <p className="empty-cart-description">
+              Your cart is empty. Add something from the menu.
+            </p>
+            <Link to="/" className="cart-link-el" onClick={onClickOrderNow}>
+              <button type="button" className="empty-cart-button">
+                Order Now
+              </button>
+            </Link>
+          </div>
+        )
+      }}
+    </TabContext.Consumer>
   )
 
   getCartView = () => {
@@ -181,32 +200,47 @@ class Cart extends Component {
   }
 
   getPaymentSuccessView = () => (
-    <div className="payment-success-view">
-      <img
-        src="https://res.cloudinary.com/dgil22y25/image/upload/v1713602787/check-circle.1_1_lbe7hn.png"
-        alt="success"
-        className="payment-success-image"
-      />
-      <h1 className="payment-success-heading">Payment Successful</h1>
-      <p className="payment-success-description">
-        Thank you for ordering Your payment is successfully completed.
-      </p>
-      <Link to="/" className="cart-link-el">
-        <button type="button" className="payment-success-button">
-          Go To Home Page
-        </button>
-      </Link>
-    </div>
+    <TabContext.Consumer>
+      {value => {
+        const {changeTab} = value
+
+        const onClickGotoHomePage = () => {
+          changeTab('HOME')
+        }
+
+        return (
+          <div className="payment-success-view">
+            <img
+              src="https://res.cloudinary.com/dgil22y25/image/upload/v1713602787/check-circle.1_1_lbe7hn.png"
+              alt="success"
+              className="payment-success-image"
+            />
+            <h1 className="payment-success-heading">Payment Successful</h1>
+            <p className="payment-success-description">
+              Thank you for ordering Your payment is successfully completed.
+            </p>
+            <Link to="/" className="cart-link-el" onClick={onClickGotoHomePage}>
+              <button type="button" className="payment-success-button">
+                Go To Home Page
+              </button>
+            </Link>
+          </div>
+        )
+      }}
+    </TabContext.Consumer>
   )
 
   renderView = () => {
     const {cartList, isPaymentDone} = this.state
 
-    if (cartList.length === 0) {
-      return this.getEmptyCartView()
-    } else if (isPaymentDone) {
+    if (isPaymentDone) {
       return this.getPaymentSuccessView()
     }
+
+    if (cartList.length === 0) {
+      return this.getEmptyCartView()
+    }
+
     return this.getCartView()
   }
 

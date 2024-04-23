@@ -1,9 +1,10 @@
+/* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
-import Header from '../Header'
-import Footer from '../Footer'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import {FaStar} from 'react-icons/fa'
+import Header from '../Header'
+import Footer from '../Footer'
 import './index.css'
 
 const cartItems = JSON.parse(localStorage.getItem('cartData'))
@@ -270,23 +271,25 @@ class RestaurantDetails extends Component {
         <div className="rest-details-banner">
           <img src={imageUrl} alt="restaurant" className="rest-banner-image" />
           <div className="rest-banner-details">
-            <h1 className="banner-rest-info">{name}</h1>
+            <h1 className="banner-rest-name">{name}</h1>
             <p className="banner-rest-info">{cuisine}</p>
             <p className="banner-rest-info">{location}</p>
-            <p className="banner-rest-info">{opensAt}</p>
-            <p className="banner-rest-info">{itemsCount}</p>
-            <div className="banner-rating-cont">
-              <div className="banner-rating-num">
-                <FaStar className="banner-rating-star" />
-                <span className="banner-rest-rating">{rating}</span>
+            <p className="banner-rest-info">opens at {opensAt}</p>
+            <p className="banner-rest-info">items count {itemsCount}</p>
+            <div className="banner-rating-and-cost-cont">
+              <div className="banner-rating-cont">
+                <div className="banner-rating-num">
+                  <FaStar className="banner-rating-star" />
+                  <span className="banner-rest-rating">{rating}</span>
+                </div>
+                <span className="banner-rest-total-ratings">
+                  {reviewsCount}+ Ratings
+                </span>
               </div>
-              <span className="banner-rest-total-ratings">
-                {reviewsCount}+ Ratings
-              </span>
-            </div>
-            <div className="banner-rest-cost-cont">
-              <span className="banner-rest-cost">₹ {costForTwo}</span>
-              <span className="banner-rest-cost-for-two">Cost for two</span>
+              <div className="banner-rest-cost-cont">
+                <span className="banner-rest-cost">₹ {costForTwo}</span>
+                <span className="banner-rest-cost-for-two">Cost for two</span>
+              </div>
             </div>
           </div>
         </div>

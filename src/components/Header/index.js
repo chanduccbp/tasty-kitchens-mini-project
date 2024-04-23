@@ -46,7 +46,7 @@ const Header = props => {
 
         return (
           <nav className="navbar">
-            <Link to="/" className="nav-title">
+            <Link to="/" className="nav-title" onClick={onClickHomeTab}>
               <img
                 src="https://res.cloudinary.com/dgil22y25/image/upload/v1712137729/x27mnr9o0nvtvmeflwwp.png"
                 alt="website logo"
