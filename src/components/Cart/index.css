@@ -77,3 +77,132 @@
   width: 131px;
   border-style: none;
 }
+
+.cart-view-cont {
+  min-height: 85vh;
+}
+
+.cart-items-cont {
+  height: 504px;
+  margin-left: 165px;
+  margin-right: 165px;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  background-color: #f9fbfe;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-items-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 48px;
+  width: 100%;
+}
+
+.cart-heading {
+  font-family: 'DM Sans';
+  font-weight: 500;
+  font-size: 20px;
+  color: #475569;
+}
+
+.cart-items-list {
+  padding-left: 0px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.cart-item {
+  margin-left: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cart-item-info {
+  display: flex;
+  align-items: center;
+}
+
+.cart-item-img {
+  height: 100px;
+  width: 136px;
+  border-radius: 8px;
+  margin-right: 5px;
+}
+
+.cart-item-name {
+  font-family: 'DM Sans';
+  font-weight: 500;
+  font-size: 20px;
+  color: #183b56;
+}
+
+.cart-item-quantity-cont {
+  width: 74px;
+  height: 24px;
+  color: #475569;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item-quantity-update-button {
+  height: 18px;
+  width: 18px;
+  border-radius: 2px;
+}
+
+.cart-item-quantity {
+  color: #475569;
+  font-family: 'DM Sans';
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.cart-item-price {
+  color: #ffa412;
+  font-family: 'DM Sans';
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.cart-total-price {
+  border-top: 1px dotted #cbd2d9;
+  margin-left: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.order-total-cont {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-total {
+  font-family: 'roboto';
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.order-button {
+  align-self: flex-end;
+  border-style: none;
+  background-color: #f7931e;
+  color: #ffffff;
+  height: 32px;
+  width: 99px;
+  border-radius: 8px;
+}

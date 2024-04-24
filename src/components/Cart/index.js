@@ -7,19 +7,18 @@ import TabContext from '../../context/TabContext'
 import './index.css'
 
 const getCartItems = () => {
-  const cartItems = JSON.parse(localStorage.getItem('cartData'))
+  const cartItems = localStorage.getItem('cartData')
   if (cartItems === null) {
     localStorage.setItem('cartData', JSON.stringify([]))
     return []
   }
-  return cartItems
+  return JSON.parse(cartItems)
 }
 
 class Cart extends Component {
   state = {cartList: getCartItems(), isPaymentDone: false}
 
   onPlacingOrder = () => {
-    localStorage.removeItem('cartData')
     this.setState({isPaymentDone: true})
   }
 
@@ -236,7 +235,6 @@ class Cart extends Component {
     if (isPaymentDone) {
       return this.getPaymentSuccessView()
     }
-
     if (cartList.length === 0) {
       return this.getEmptyCartView()
     }

@@ -7,11 +7,6 @@ import Header from '../Header'
 import Footer from '../Footer'
 import './index.css'
 
-const cartItems = JSON.parse(localStorage.getItem('cartData'))
-if (cartItems === null) {
-  localStorage.setItem('cartData', JSON.stringify([]))
-}
-
 const apiStatusConstants = {
   initial: 'INITIAL',
   inProgress: 'IN_PROGRESS',
@@ -26,6 +21,10 @@ class RestaurantDetails extends Component {
   }
 
   componentDidMount() {
+    const cartItems = localStorage.getItem('cartData')
+    if (cartItems === null) {
+      localStorage.setItem('cartData', JSON.stringify([]))
+    }
     this.getRestaurantDetails()
   }
 
@@ -308,7 +307,7 @@ class RestaurantDetails extends Component {
             }
 
             return (
-              <li testid="foodItem" className="food-item">
+              <li testid="foodItem" className="food-item" key={eachObj.id}>
                 <img
                   src={eachObj.imageUrl}
                   alt="foodItem"
