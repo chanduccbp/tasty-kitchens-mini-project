@@ -6,85 +6,23 @@ import Footer from '../Footer'
 import TabContext from '../../context/TabContext'
 import './index.css'
 
-const getCartItems = () => {
-  const cartItems = localStorage.getItem('cartData')
-  if (cartItems === null) {
-    localStorage.setItem('cartData', JSON.stringify([]))
-    return []
-  }
-  return JSON.parse(cartItems)
-}
-
 class Cart extends Component {
-  state = {cartList: getCartItems(), isPaymentDone: false}
+  state = {isPaymentDone: false}
 
   onPlacingOrder = () => {
     this.setState({isPaymentDone: true})
   }
 
-  getTotalPrice = () => {
-    const {cartList} = this.state
+  getTotalPrice = cartItems => {
     let totalPrice = 0
 
     const addPrice = eachObj => {
       totalPrice += eachObj.quantity * eachObj.cost
     }
 
-    cartList.forEach(eachObj => addPrice(eachObj))
+    cartItems.forEach(eachObj => addPrice(eachObj))
 
     return totalPrice
-  }
-
-  incrementItem = item => {
-    const {cartList} = this.state
-
-    const updatedCartItemsList = cartList.map(eachObj => {
-      if (eachObj.id === item.id) {
-        return {
-          id: item.id,
-          name: item.name,
-          cost: item.cost,
-          quantity: item.quantity + 1,
-          imageUrl: item.imageUrl,
-        }
-      }
-
-      return eachObj
-    })
-
-    localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
-
-    this.setState({cartList: updatedCartItemsList})
-  }
-
-  decrementItem = item => {
-    const {cartList} = this.state
-
-    if (item.quantity > 1) {
-      const updatedCartItemsList = cartList.map(eachObj => {
-        if (eachObj.id === item.id) {
-          return {
-            id: item.id,
-            name: item.name,
-            cost: item.cost,
-            quantity: item.quantity - 1,
-            imageUrl: item.imageUrl,
-          }
-        }
-
-        return eachObj
-      })
-
-      localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
-      this.setState({cartList: updatedCartItemsList})
-    } else {
-      const updatedCartItemsList = cartList.filter(
-        eachObj => eachObj.id !== item.id,
-      )
-
-      localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
-      this.setState({cartList: updatedCartItemsList})
-    }
   }
 
   getEmptyCartView = () => (
@@ -118,85 +56,105 @@ class Cart extends Component {
     </TabContext.Consumer>
   )
 
-  getCartView = () => {
-    const {cartList} = this.state
+  getCartView = () => (
+    <TabContext.Consumer>
+      {value => {
+        const {
+          cartItems,
+          incrementItemQuantity,
+          decrementItemQuantity,
+          removeItemFromCart,
+        } = value
 
-    return (
-      <div className="cart-view-cont">
-        <div className="cart-items-cont">
-          <div className="cart-items-header">
-            <span className="cart-heading">Item</span>
-            <span className="cart-heading">Quantity</span>
-            <span className="cart-heading">Price</span>
-          </div>
-          <ul className="cart-items-list">
-            {cartList.map(eachObj => {
-              const onClickPlus = () => {
-                this.incrementItem(eachObj)
-              }
+        return (
+          <div className="cart-view-cont">
+            <div className="cart-items-cont">
+              <div className="cart-items-header">
+                <span className="cart-heading">Item</span>
+                <span className="cart-heading">Quantity</span>
+                <span className="cart-heading">Price</span>
+              </div>
+              <ul className="cart-items-list">
+                {cartItems.map(eachObj => {
+                  const onClickPlus = () => {
+                    incrementItemQuantity(eachObj.id)
+                  }
 
-              const onClickMinus = () => {
-                this.decrementItem(eachObj)
-              }
+                  const onClickMinus = () => {
+                    if (eachObj.quantity > 1) {
+                      decrementItemQuantity(eachObj.id)
+                    } else {
+                      removeItemFromCart(eachObj.id)
+                    }
+                  }
 
-              return (
-                <li testid="cartItem" className="cart-item" key={eachObj.id}>
-                  <div className="cart-item-info">
-                    <img
-                      src={eachObj.imageUrl}
-                      alt="cart-item-img"
-                      className="cart-item-img"
-                    />
-                    <span className="cart-item-name">{eachObj.name}</span>
-                  </div>
-                  <div className="cart-item-quantity-cont">
-                    <button
-                      testid="decrement-quantity"
-                      type="button"
-                      onClick={onClickMinus}
-                      className="cart-item-quantity-update-button"
+                  return (
+                    <li
+                      testid="cartItem"
+                      className="cart-item"
+                      key={eachObj.id}
                     >
-                      -
-                    </button>
-                    <span testid="item-quantity" className="cart-item-quantity">
-                      {eachObj.quantity}
-                    </span>
-                    <button
-                      testid="increment-quantity"
-                      type="button"
-                      onClick={onClickPlus}
-                      className="cart-item-quantity-update-button"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <span className="cart-item-price">
-                    {eachObj.quantity * eachObj.cost}
+                      <div className="cart-item-info">
+                        <img
+                          src={eachObj.imageUrl}
+                          alt="cart-item-img"
+                          className="cart-item-img"
+                        />
+                        <span className="cart-item-name">{eachObj.name}</span>
+                      </div>
+                      <div className="cart-item-quantity-cont">
+                        <button
+                          testid="decrement-quantity"
+                          type="button"
+                          onClick={onClickMinus}
+                          className="cart-item-quantity-update-button"
+                        >
+                          -
+                        </button>
+                        <span
+                          testid="item-quantity"
+                          className="cart-item-quantity"
+                        >
+                          {eachObj.quantity}
+                        </span>
+                        <button
+                          testid="increment-quantity"
+                          type="button"
+                          onClick={onClickPlus}
+                          className="cart-item-quantity-update-button"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <span className="cart-item-price">
+                        {eachObj.quantity * eachObj.cost}
+                      </span>
+                    </li>
+                  )
+                })}
+              </ul>
+              <div className="cart-total-price">
+                <div className="order-total-cont">
+                  <span className="order-total">Order Total: </span>
+                  <span testid="total-price" className="order-total">
+                    ₹ {this.getTotalPrice(cartItems)}
                   </span>
-                </li>
-              )
-            })}
-          </ul>
-          <div className="cart-total-price">
-            <div className="order-total-cont">
-              <span className="order-total">Order Total: </span>
-              <span testid="total-price" className="order-total">
-                ₹ {this.getTotalPrice()}
-              </span>
+                </div>
+                <button
+                  type="button"
+                  className="order-button"
+                  onClick={this.onPlacingOrder}
+                >
+                  Place Order
+                </button>
+              </div>
             </div>
-            <button
-              type="button"
-              className="order-button"
-              onClick={this.onPlacingOrder}
-            >
-              Place Order
-            </button>
+            <Footer />
           </div>
-        </div>
-        <Footer />
-      </div>
-    )
-  }
+        )
+      }}
+    </TabContext.Consumer>
+  )
 
   getPaymentSuccessView = () => (
     <TabContext.Consumer>
@@ -230,16 +188,24 @@ class Cart extends Component {
   )
 
   renderView = () => {
-    const {cartList, isPaymentDone} = this.state
+    const {isPaymentDone} = this.state
 
-    if (isPaymentDone) {
-      return this.getPaymentSuccessView()
-    }
-    if (cartList.length === 0) {
-      return this.getEmptyCartView()
-    }
+    return (
+      <TabContext.Consumer>
+        {value => {
+          const {cartItems} = value
 
-    return this.getCartView()
+          if (isPaymentDone) {
+            return this.getPaymentSuccessView()
+          }
+          if (cartItems.length === 0) {
+            return this.getEmptyCartView()
+          }
+
+          return this.getCartView()
+        }}
+      </TabContext.Consumer>
+    )
   }
 
   render() {

@@ -6,6 +6,11 @@ const TabContext = React.createContext({
   showMenu: '',
   onClickHamIcon: () => {},
   onClickClose: () => {},
+  cartItems: '',
+  addItemToCart: () => {},
+  incrementItemQuantity: () => {},
+  decrementItemQuantity: () => {},
+  removeItemFromCart: () => {},
 })
 
 export default TabContext

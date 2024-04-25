@@ -19,8 +19,20 @@ const getActiveTab = () => {
   return JSON.parse(activeTab)
 }
 
+const getCartItems = () => {
+  const cartItems = localStorage.getItem('cartData')
+  if (cartItems === null) {
+    return []
+  }
+  return JSON.parse(cartItems)
+}
+
 class App extends Component {
-  state = {activeNavTab: getActiveTab(), showMenu: false}
+  state = {
+    activeNavTab: getActiveTab(),
+    showMenu: false,
+    cartItems: getCartItems(),
+  }
 
   changeTab = tab => {
     localStorage.setItem('active_tab', JSON.stringify(tab))
@@ -35,8 +47,59 @@ class App extends Component {
     this.setState({showMenu: false})
   }
 
+  updateLocalStorage = () => {
+    const {cartItems} = this.state
+    localStorage.setItem('cartData', JSON.stringify(cartItems))
+  }
+
+  addItemToCart = item => {
+    this.setState(
+      prevState => ({
+        cartItems: [...prevState.cartItems, item],
+      }),
+      this.updateLocalStorage,
+    )
+  }
+
+  incrementItemQuantity = id => {
+    this.setState(
+      prevState => ({
+        cartItems: prevState.cartItems.map(eachObj => {
+          if (eachObj.id === id) {
+            return {...eachObj, quantity: eachObj.quantity + 1}
+          }
+          return eachObj
+        }),
+      }),
+      this.updateLocalStorage,
+    )
+  }
+
+  decrementItemQuantity = id => {
+    this.setState(
+      prevState => ({
+        cartItems: prevState.cartItems.map(eachObj => {
+          if (eachObj.id === id) {
+            return {...eachObj, quantity: eachObj.quantity - 1}
+          }
+          return eachObj
+        }),
+      }),
+      this.updateLocalStorage,
+    )
+  }
+
+  removeItemFromCart = id => {
+    this.setState(
+      prevState => ({
+        cartItems: prevState.cartItems.filter(eachObj => eachObj.id !== id),
+      }),
+      this.updateLocalStorage,
+    )
+  }
+
   render() {
-    const {activeNavTab, showMenu} = this.state
+    const {activeNavTab, showMenu, cartItems} = this.state
 
     return (
       <TabContext.Provider
@@ -46,6 +109,11 @@ class App extends Component {
           showMenu,
           onClickHamIcon: this.onClickHamIcon,
           onClickClose: this.onClickClose,
+          cartItems,
+          addItemToCart: this.addItemToCart,
+          incrementItemQuantity: this.incrementItemQuantity,
+          decrementItemQuantity: this.decrementItemQuantity,
+          removeItemFromCart: this.removeItemFromCart,
         }}
       >
         <Switch>

@@ -75,7 +75,7 @@ class Home extends Component {
     }))
 
     const restaurantsData = await restaurantsResponse.json()
-    console.log(restaurantsData)
+
     const updatedRestaurantsData = restaurantsData.restaurants.map(eachObj => ({
       id: eachObj.id,
       imageUrl: eachObj.image_url,
@@ -175,12 +175,12 @@ class Home extends Component {
       <div className="restaurants-list-cont">
         <ul className="restaurants-list">
           {restaurantsList.map(eachObj => (
-            <Link to={`/restaurant/${eachObj.id}`} className="res-item-link-el">
-              <li
-                testid="restaurant-item"
-                key={eachObj.id}
-                className="restaurant-item"
-              >
+            <Link
+              to={`/restaurant/${eachObj.id}`}
+              className="res-item-link-el"
+              key={eachObj.id}
+            >
+              <li testid="restaurant-item" className="restaurant-item">
                 <img
                   src={eachObj.imageUrl}
                   alt="restaurant"

@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner'
 import {FaStar} from 'react-icons/fa'
 import Header from '../Header'
 import Footer from '../Footer'
+import RestaurantFoodItem from '../RestaurantFoodItem'
 import './index.css'
 
 const apiStatusConstants = {
@@ -21,10 +22,6 @@ class RestaurantDetails extends Component {
   }
 
   componentDidMount() {
-    const cartItems = localStorage.getItem('cartData')
-    if (cartItems === null) {
-      localStorage.setItem('cartData', JSON.stringify([]))
-    }
     this.getRestaurantDetails()
   }
 
@@ -68,8 +65,6 @@ class RestaurantDetails extends Component {
         imageUrl: eachObj.image_url,
         id: eachObj.id,
         rating: eachObj.rating,
-        quantity: 1,
-        isAdded: false,
       }),
     )
 
@@ -78,165 +73,6 @@ class RestaurantDetails extends Component {
       foodItems: updatedFoodItemsData,
       apiStatus: apiStatusConstants.success,
     })
-  }
-
-  addItemToCart = item => {
-    const {foodItems} = this.state
-    const cartItemsList = JSON.parse(localStorage.getItem('cartData'))
-    const similarItem = cartItemsList.find(eachObj => eachObj.id === item.id)
-
-    if (similarItem === undefined) {
-      const newItem = {
-        id: item.id,
-        name: item.name,
-        cost: item.cost,
-        quantity: item.quantity,
-        imageUrl: item.imageUrl,
-      }
-
-      const newCartItemsList = cartItemsList.push(newItem)
-      localStorage.setItem('cartData', JSON.stringify(newCartItemsList))
-
-      const updatedFoodItems = foodItems.map(eachObj => {
-        if (eachObj.id === item.id) {
-          return {
-            name: item.name,
-            cost: item.cost,
-            foodType: item.foodType,
-            imageUrl: item.imageUrl,
-            id: item.id,
-            rating: item.rating,
-            quantity: item.quantity,
-            isAdded: true,
-          }
-        }
-        return eachObj
-      })
-
-      this.setState({foodItems: updatedFoodItems})
-    } else {
-      const updatedFoodItems = foodItems.map(eachObj => {
-        if (eachObj.id === item.id) {
-          return {
-            name: item.name,
-            cost: item.cost,
-            foodType: item.foodType,
-            imageUrl: item.imageUrl,
-            id: item.id,
-            rating: item.rating,
-            quantity: similarItem.quantity,
-            isAdded: true,
-          }
-        }
-        return eachObj
-      })
-
-      this.setState({foodItems: updatedFoodItems})
-    }
-  }
-
-  increaseItemCount = item => {
-    const {foodItems} = this.state
-    const cartItemsList = JSON.parse(localStorage.getItem('cartData'))
-
-    const updatedCartItemsList = cartItemsList.map(eachObj => {
-      if (eachObj.id === item.id) {
-        return {
-          id: item.id,
-          name: item.name,
-          cost: item.cost,
-          quantity: item.quantity + 1,
-          imageUrl: item.imageUrl,
-        }
-      }
-
-      return eachObj
-    })
-
-    localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
-
-    const updatedFoodItems = foodItems.map(eachObj => {
-      if (eachObj.id === item.id) {
-        return {
-          name: item.name,
-          cost: item.cost,
-          foodType: item.foodType,
-          imageUrl: item.imageUrl,
-          id: item.id,
-          rating: item.rating,
-          quantity: item.quantity + 1,
-          isAdded: true,
-        }
-      }
-      return eachObj
-    })
-
-    this.setState({foodItems: updatedFoodItems})
-  }
-
-  decreaseItemCount = item => {
-    const {foodItems} = this.state
-    const cartItemsList = JSON.parse(localStorage.getItem('cartData'))
-
-    if (item.quantity > 1) {
-      const updatedCartItemsList = cartItemsList.map(eachObj => {
-        if (eachObj.id === item.id) {
-          return {
-            id: item.id,
-            name: item.name,
-            cost: item.cost,
-            quantity: item.quantity - 1,
-            imageUrl: item.imageUrl,
-          }
-        }
-
-        return eachObj
-      })
-
-      localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
-
-      const updatedFoodItems = foodItems.map(eachObj => {
-        if (eachObj.id === item.id) {
-          return {
-            name: item.name,
-            cost: item.cost,
-            foodType: item.foodType,
-            imageUrl: item.imageUrl,
-            id: item.id,
-            rating: item.rating,
-            quantity: item.quantity - 1,
-            isAdded: true,
-          }
-        }
-        return eachObj
-      })
-
-      this.setState({foodItems: updatedFoodItems})
-    } else {
-      const updatedCartItemsList = cartItemsList.filter(
-        eachObj => eachObj.id !== item.id,
-      )
-
-      localStorage.setItem('cartData', JSON.stringify(updatedCartItemsList))
-
-      const updatedFoodItems = foodItems.map(eachObj => {
-        if (eachObj.id === item.id) {
-          return {
-            name: item.name,
-            cost: item.cost,
-            foodType: item.foodType,
-            imageUrl: item.imageUrl,
-            id: item.id,
-            rating: item.rating,
-            quantity: item.quantity,
-            isAdded: false,
-          }
-        }
-        return eachObj
-      })
-
-      this.setState({foodItems: updatedFoodItems})
-    }
   }
 
   getRestaurantDetailsLoadingView = () => (
@@ -293,68 +129,9 @@ class RestaurantDetails extends Component {
           </div>
         </div>
         <ul className="food-items-list">
-          {foodItems.map(eachObj => {
-            const onClickAddButton = () => {
-              this.addItemToCart(eachObj)
-            }
-
-            const onClickIncrementButton = () => {
-              this.increaseItemCount(eachObj)
-            }
-
-            const onClickDecrementButton = () => {
-              this.decreaseItemCount(eachObj)
-            }
-
-            return (
-              <li testid="foodItem" className="food-item" key={eachObj.id}>
-                <img
-                  src={eachObj.imageUrl}
-                  alt="foodItem"
-                  className="food-item-image"
-                />
-                <div className="food-item-details">
-                  <h1 className="food-item-name">{eachObj.name}</h1>
-                  <p className="food-item-cost">₹ {eachObj.cost}</p>
-                  <div className="food-item-rating-cont">
-                    <FaStar className="food-item-rating-star" />
-                    <span className="food-item-rating">{eachObj.rating}</span>
-                  </div>
-                  {eachObj.isAdded ? (
-                    <div className="food-item-quantity-cont">
-                      <button
-                        testid="decrement-count"
-                        type="button"
-                        onClick={onClickDecrementButton}
-                        className="item-quantity-update-button"
-                      >
-                        -
-                      </button>
-                      <span testid="active-count" className="item-quantity">
-                        {eachObj.quantity}
-                      </span>
-                      <button
-                        testid="increment-count"
-                        type="button"
-                        onClick={onClickIncrementButton}
-                        className="item-quantity-update-button"
-                      >
-                        +
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={onClickAddButton}
-                      className="item-add-button"
-                    >
-                      ADD
-                    </button>
-                  )}
-                </div>
-              </li>
-            )
-          })}
+          {foodItems.map(eachObj => (
+            <RestaurantFoodItem key={eachObj.id} itemDetails={eachObj} />
+          ))}
         </ul>
       </div>
     )
