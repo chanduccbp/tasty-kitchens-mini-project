@@ -32,6 +32,7 @@ class App extends Component {
     activeNavTab: getActiveTab(),
     showMenu: false,
     cartItems: getCartItems(),
+    isPaymentDone: false,
   }
 
   changeTab = tab => {
@@ -98,8 +99,12 @@ class App extends Component {
     )
   }
 
+  onPlacingOrder = () => {
+    this.setState({isPaymentDone: true})
+  }
+
   render() {
-    const {activeNavTab, showMenu, cartItems} = this.state
+    const {activeNavTab, showMenu, cartItems, isPaymentDone} = this.state
 
     return (
       <TabContext.Provider
@@ -114,6 +119,8 @@ class App extends Component {
           incrementItemQuantity: this.incrementItemQuantity,
           decrementItemQuantity: this.decrementItemQuantity,
           removeItemFromCart: this.removeItemFromCart,
+          isPaymentDone,
+          onPlacingOrder: this.onPlacingOrder,
         }}
       >
         <Switch>

@@ -11,6 +11,8 @@ const TabContext = React.createContext({
   incrementItemQuantity: () => {},
   decrementItemQuantity: () => {},
   removeItemFromCart: () => {},
+  isPaymentDone: '',
+  onPlacingOrder: () => {},
 })
 
 export default TabContext

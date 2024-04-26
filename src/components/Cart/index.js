@@ -1,19 +1,12 @@
 /* eslint-disable react/no-unknown-property */
-import {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Header from '../Header'
 import Footer from '../Footer'
 import TabContext from '../../context/TabContext'
 import './index.css'
 
-class Cart extends Component {
-  state = {isPaymentDone: false}
-
-  onPlacingOrder = () => {
-    this.setState({isPaymentDone: true})
-  }
-
-  getTotalPrice = cartItems => {
+const Cart = () => {
+  const getTotalPrice = cartItems => {
     let totalPrice = 0
 
     const addPrice = eachObj => {
@@ -25,7 +18,7 @@ class Cart extends Component {
     return totalPrice
   }
 
-  getEmptyCartView = () => (
+  const getEmptyCartView = () => (
     <TabContext.Consumer>
       {value => {
         const {changeTab} = value
@@ -56,7 +49,7 @@ class Cart extends Component {
     </TabContext.Consumer>
   )
 
-  getCartView = () => (
+  const getCartView = () => (
     <TabContext.Consumer>
       {value => {
         const {
@@ -64,15 +57,20 @@ class Cart extends Component {
           incrementItemQuantity,
           decrementItemQuantity,
           removeItemFromCart,
+          onPlacingOrder,
         } = value
+
+        const onClickPlaceOrder = () => {
+          onPlacingOrder()
+        }
 
         return (
           <div className="cart-view-cont">
             <div className="cart-items-cont">
               <div className="cart-items-header">
-                <span className="cart-heading">Item</span>
-                <span className="cart-heading">Quantity</span>
-                <span className="cart-heading">Price</span>
+                <span className="cart-item-heading">Item</span>
+                <span className="cart-quantity-heading">Quantity</span>
+                <span className="cart-price-heading">Price</span>
               </div>
               <ul className="cart-items-list">
                 {cartItems.map(eachObj => {
@@ -137,13 +135,13 @@ class Cart extends Component {
                 <div className="order-total-cont">
                   <span className="order-total">Order Total: </span>
                   <span testid="total-price" className="order-total">
-                    ₹ {this.getTotalPrice(cartItems)}
+                    ₹ {getTotalPrice(cartItems)}
                   </span>
                 </div>
                 <button
                   type="button"
                   className="order-button"
-                  onClick={this.onPlacingOrder}
+                  onClick={onClickPlaceOrder}
                 >
                   Place Order
                 </button>
@@ -156,7 +154,7 @@ class Cart extends Component {
     </TabContext.Consumer>
   )
 
-  getPaymentSuccessView = () => (
+  const getPaymentSuccessView = () => (
     <TabContext.Consumer>
       {value => {
         const {changeTab} = value
@@ -187,35 +185,28 @@ class Cart extends Component {
     </TabContext.Consumer>
   )
 
-  renderView = () => {
-    const {isPaymentDone} = this.state
+  const renderView = () => (
+    <TabContext.Consumer>
+      {value => {
+        const {cartItems, isPaymentDone} = value
 
-    return (
-      <TabContext.Consumer>
-        {value => {
-          const {cartItems} = value
+        if (isPaymentDone) {
+          return getPaymentSuccessView()
+        }
+        if (cartItems.length === 0) {
+          return getEmptyCartView()
+        }
+        return getCartView()
+      }}
+    </TabContext.Consumer>
+  )
 
-          if (isPaymentDone) {
-            return this.getPaymentSuccessView()
-          }
-          if (cartItems.length === 0) {
-            return this.getEmptyCartView()
-          }
-
-          return this.getCartView()
-        }}
-      </TabContext.Consumer>
-    )
-  }
-
-  render() {
-    return (
-      <div className="cart-cont">
-        <Header />
-        {this.renderView()}
-      </div>
-    )
-  }
+  return (
+    <div className="cart-cont">
+      <Header />
+      {renderView()}
+    </div>
+  )
 }
 
 export default Cart
