@@ -17,11 +17,29 @@
   width: 100%;
 }
 
+@media screen and (max-width: 767px) {
+  .rest-details-banner {
+    height: 200px;
+    padding-left: 0px;
+  }
+}
+
 .rest-banner-image {
   width: 445px;
   height: 280px;
   border-radius: 8px;
   margin-right: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .rest-banner-image {
+    height: 80%;
+    width: 40%;
+    border-radius: 0px;
+    border-bottom-right-radius: 133px;
+    border-bottom-left-radius: 133px;
+    align-self: flex-start;
+  }
 }
 
 .rest-banner-details {
@@ -34,6 +52,13 @@
   color: #ffffff;
 }
 
+@media screen and (max-width: 767px) {
+  .rest-banner-details {
+    width: 50%;
+    height: 70%;
+  }
+}
+
 .banner-rest-name {
   font-family: 'roboto';
   font-weight: 500;
@@ -42,12 +67,25 @@
   margin-bottom: 10px;
 }
 
+@media screen and (max-width: 767px) {
+  .banner-rest-name {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+}
+
 .banner-rest-info {
   font-family: 'roboto';
   font-weight: 400;
   font-size: 16px;
   margin-top: 0px;
   margin-bottom: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .banner-rest-info {
+    font-size: 12px;
+  }
 }
 
 .banner-rating-and-cost-cont {
@@ -78,6 +116,12 @@
   font-size: 14px;
 }
 
+@media screen and (max-width: 767px) {
+  .banner-rest-rating {
+    font-size: 12px;
+  }
+}
+
 .banner-rest-total-ratings {
   font-family: 'DM Sans';
   font-weight: 400;
@@ -97,6 +141,12 @@
   font-family: 'DM Sans';
   font-weight: 700;
   font-size: 14px;
+}
+
+@media screen and (max-width: 767px) {
+  .banner-rest-cost {
+    font-size: 12px;
+  }
 }
 
 .banner-rest-cost-for-two {
@@ -124,6 +174,6 @@
     flex-wrap: nowrap;
     padding-left: 0px;
     padding-right: 0px;
-    width: 90%;
+    width: 100%;
   }
 }

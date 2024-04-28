@@ -100,29 +100,37 @@ const Cart = () => {
                         />
                         <span className="cart-item-name">{eachObj.name}</span>
                       </div>
-                      <div className="cart-item-quantity-cont">
-                        <button
-                          testid="decrement-quantity"
-                          type="button"
-                          onClick={onClickMinus}
-                          className="cart-item-quantity-update-button"
-                        >
-                          -
-                        </button>
-                        <span
-                          testid="item-quantity"
-                          className="cart-item-quantity"
-                        >
-                          {eachObj.quantity}
+                      <div className="cart-item-quantity-cont-mob">
+                        <span className="cart-item-name-mob">
+                          {eachObj.name}
                         </span>
-                        <button
-                          testid="increment-quantity"
-                          type="button"
-                          onClick={onClickPlus}
-                          className="cart-item-quantity-update-button"
-                        >
-                          +
-                        </button>
+                        <div className="cart-item-quantity-cont">
+                          <button
+                            testid="decrement-quantity"
+                            type="button"
+                            onClick={onClickMinus}
+                            className="cart-item-quantity-update-button"
+                          >
+                            -
+                          </button>
+                          <span
+                            testid="item-quantity"
+                            className="cart-item-quantity"
+                          >
+                            {eachObj.quantity}
+                          </span>
+                          <button
+                            testid="increment-quantity"
+                            type="button"
+                            onClick={onClickPlus}
+                            className="cart-item-quantity-update-button"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <span className="cart-item-price-mob">
+                          {eachObj.quantity * eachObj.cost}
+                        </span>
                       </div>
                       <span className="cart-item-price">
                         {eachObj.quantity * eachObj.cost}
